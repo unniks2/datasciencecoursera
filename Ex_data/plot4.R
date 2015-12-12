@@ -1,0 +1,17 @@
+library(lubridate)
+library(dplyr)
+read.table("hp",header=TRUE,sep = ";",colClasses = "character")
+date<-dmy(c("01-02-2007","02-02-2007"))
+final<-filter(hp,ymd(hp$date)==date)
+final$datetime<-paste(final$Date,final$Time)
+final$datetime<-strptime(final$datetime,"%d/%m/%Y %H:%M:%S")
+
+par(mfrow=c(2,2))
+
+plot(final$datetime,final$Global_active_power,pch=20,type = "l",col="black",xlab = "",ylab = "Global Active Power")
+plot(final$datetime,final$Voltage,pch=20,type = "l",col="black",xlab = "datetime",ylab = "Voltage")
+plot(final$datetime,final$Sub_metering_1,pch=20,type = "l",col="grey",xlab = "",ylab = "Energy sub metering")
+points(final$datetime,final$Sub_metering_2,pch=20,type = "l",col="red")
+points(final$datetime,final$Sub_metering_3,pch=20,type = "l",col="blue")
+points(final$datetime,final$Global_reactive_power,pch=20,type = "l",col="black")
+plot(final$datetime,final$Global_reactive_power,pch=20,type = "l",col="black",xlab = "datetime",ylab = "Global_reactive_power")

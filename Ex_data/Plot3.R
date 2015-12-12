@@ -1,0 +1,11 @@
+library(lubridate)
+library(dplyr)
+read.table("hp",header=TRUE,sep = ";",colClasses = "character")
+date<-dmy(c("01-02-2007","02-02-2007"))
+final<-filter(hp,ymd(hp$date)==date)
+final$datetime<-paste(final$Date,final$Time)
+final$datetime<-strptime(final$datetime,"%d/%m/%Y %H:%M:%S")
+
+plot(final$datetime,final$Sub_metering_1,pch=20,type = "l",col="grey")
+points(final$datetime,final$Sub_metering_2,pch=20,type = "l",col="red")
+points(final$datetime,final$Sub_metering_3,pch=20,type = "l",col="blue")
